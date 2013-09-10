@@ -1,13 +1,10 @@
-package AlgoritmosDeGrafos;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 
-public class BlockVoting {
+public class Shortest {
 
-	// split de array
+	// split de array`
 	public static int[] atoi(String cad) {
 		String read[] = cad.split(" ");
 		int res[] = new int[ read.length ];
@@ -55,53 +52,69 @@ public class BlockVoting {
 		System.out.println();
 	}
 
-	public static int max = 0;
-	public static int arr[];
-	public static boolean visited[];
-	public static int promedio = 0;
-
-	public static void dfs(int pivot, int sum, String res, int index, int num) {
-		if (num == 2) {
-
-		} else
-			for (int i = index + 1; i < arr.length; i++) {
-				if (i != pivot && !visited[i]) {
-					if (sum + arr[i] <= promedio && sum + arr[i] + arr[pivot] > promedio) {
-						max++;
-						visited[i] = true;
-						//System.out.println(res + "" + arr[i]);
-						dfs(pivot, sum + arr[i], res + "" + arr[i], i, num + 1);
-						visited[i] = false;
-					} else if (sum + arr[i] < promedio) {
-						visited[i] = true;
-						// System.out.println(res + "" + arr[i]);
-						dfs(pivot, sum + arr[i], res + "" + arr[i], i, num + 1);
-						visited[i] = false;
-					}
-				}
-			}
-
-	}
-
 	public static void main(String[] args) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		String line = in.readLine();
-		int n = Integer.parseInt(line);
-		for (int i = 0; i < n; i++) {
-			arr = atoi(in.readLine());
-			//Arrays.sort(arr);
-			int sum = 0;
-			for (int j = 0; j < arr.length; j++) {
-				sum += arr[j];
-			}
-			promedio = sum / 2;
+		String res = in.readLine();
+		char letter1 = line.charAt(0);
+		char num1 = line.charAt(1);
+		char letter2 = res.charAt(0);
+		char num2 = res.charAt(1);
+		int cont = 0;
+		StringBuilder br = new StringBuilder();
 
-			for (int j = 0; j < arr.length; j++) {
-				max = 0;
-				visited = new boolean[ arr.length ];
-				dfs(1, 0, "", -1, 0);
-				System.out.println(max);
+		while (letter1 != letter2 && num1 != num2) {
+			if (letter1 < letter2 && num1 < num2) {
+				br.append("RU").append("\n");
+				letter1++;
+				num1++;
+			} else if (letter1 > letter2 && num1 > num2) {
+				br.append("LD").append("\n");
+				letter1--;
+				num1--;
+			} else if (letter1 > letter2 && num1 < num2) {
+				br.append("LU").append("\n");
+				letter1--;
+				num1++;
+			} else if (letter1 < letter2 && num1 > num2) {
+				br.append("RD").append("\n");
+				letter1++;
+				num1--;
+			}
+			cont++;
+		}
+
+		if (letter1 == letter2) {
+			if (num1 < num2) {
+				while (num1 < num2) {
+					br.append("U").append("\n");
+					num1++;
+					cont++;
+				}
+			} else {
+				while (num1 > num2) {
+					br.append("D").append("\n");
+					num1--;
+					cont++;
+				}
+			}
+		} else if (num1 == num2) {
+			if (letter1 < letter2) {
+				while (letter1 < letter2) {
+					br.append("R").append("\n");
+					letter1++;
+					cont++;
+				}
+			} else {
+				while (letter1 > letter2) {
+					br.append("L").append("\n");
+					letter1--;
+					cont++;
+				}
 			}
 		}
+		System.out.println(cont);
+		System.out.print(br);
 	}
+
 }
