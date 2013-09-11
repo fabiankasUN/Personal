@@ -24,7 +24,7 @@ public class NonDecreasingDigits {
 			dp[0][i] = 0;
 			dp[2][i] = dp[2][i - 1] + 10 - i + 1;
 		}
-		
+
 		for (int i = 3; i <= 64; i++) {
 			for (int j = 1; j <= 10; j++) {
 				dp[i][j] = dp[i][j - 1] + dp[i - 1][10] - dp[i - 1][j - 1];
