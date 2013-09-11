@@ -15,20 +15,6 @@ public class SumDigits {
 		return res;
 	}
 
-	public static void dfs(int index, int s) {
-		if (index == 10000) {
-
-		} else {
-			char cad[] = (index + "").toCharArray();
-			int sum = 0;
-			for (int i = 0; i < cad.length; i++) {
-				sum += Integer.parseInt(cad[i] + "");
-			}
-			System.out.println(index + " " + (s + sum));
-			dfs(index + 1, s + sum);
-		}
-	}
-
 	static long dp[][];
 	static int c[] = { 1000000000, 100000000, 10000000, 1000000, 100000, 10000, 1000, 100, 10, 1 };
 
@@ -37,24 +23,21 @@ public class SumDigits {
 		long modulo;
 		long sum = 0;
 		int arr[] = new int[ (num + "").length() ];
-
 		int tam = c.length;
 		for (int i = 0; i < arr.length; i++) {
 			arr[i] = Integer.parseInt((num + "").charAt(i) + "");
 		}
-		long div;
 		int cont = c.length - arr.length;
 		int cond = 0;
 		while (cont < c.length) {
-			div = c[cont];
-			modulo = num / div;
+			modulo = num / c[cont];
 			sum += dp[tam - cont][(int) modulo];
 			sum += arr[cond];
 			if (cont != c.length - arr.length) {
 				sum += arr[cond - 1] * (num);
 			}
 			cond++;
-			num = num % div;
+			num = num % c[cont];
 			cont++;
 		}
 		sum -= arr[arr.length - 1];
@@ -65,7 +48,6 @@ public class SumDigits {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		String line = "";
 		dp = new long[ 11 ][ 11 ];
-		// dfs(0, 0);
 		for (int i = 1; i < dp[0].length; i++) {
 			dp[0][i] = 0;
 			dp[1][i] = dp[1][i - 1] + i;
@@ -84,9 +66,7 @@ public class SumDigits {
 			long values[] = atoi(line);
 			long ini = values[0];
 			long fin = values[1];
-			long r = sum(fin);
-			long w = sum(ini - 1);
-			System.out.println((r - w));
+			System.out.println((sum(fin) - sum(ini - 1)));
 		}
 
 	}
