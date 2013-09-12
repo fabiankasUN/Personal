@@ -93,7 +93,7 @@ public class BellmanFord {
 				int peso = grafo[i].get(j).peso;
 				if (relajacion(i, fin, peso)) {
 					System.out.println("existe ciclo");
-					return;
+					//return;
 				}
 			}
 		}

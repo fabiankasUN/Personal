@@ -6,11 +6,11 @@ import java.util.ArrayList;
 public class SumDigits {
 
 	// split de array
-	public static long[] atoi(String cad) {
+	public static int[] atoi(String cad) {
 		String read[] = cad.split(" ");
-		long res[] = new long[ read.length ];
+		int res[] = new int[ read.length ];
 		for (int i = 0; i < read.length; i++) {
-			res[i] = Long.parseLong(read[i]);
+			res[i] = Integer.parseInt(read[i]);
 		}
 		return res;
 	}
@@ -46,7 +46,8 @@ public class SumDigits {
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-		String line = "";
+		String line[] = null;
+		StringBuilder out = new StringBuilder();
 		dp = new long[ 11 ][ 11 ];
 		for (int i = 1; i < dp[0].length; i++) {
 			dp[0][i] = 0;
@@ -60,14 +61,14 @@ public class SumDigits {
 			}
 		}
 
-		while ((line = in.readLine()) != null) {
-			if (line.equals("-1 -1"))
+		while ((line = in.readLine().split(" ")) != null) {
+			if (line[0].equals("0") && line[1].equals("0"))
 				break;
-			long values[] = atoi(line);
-			long ini = values[0];
-			long fin = values[1];
-			System.out.println((sum(fin) - sum(ini - 1)));
+			int ini = Integer.parseInt(line[0]);
+			int fin = Integer.parseInt(line[1]);
+			out.append((sum(fin) - sum(ini - 1)) + "\n");
 		}
+		System.out.print(out);
 
 	}
 }
